@@ -1,1 +1,1 @@
-test("manager smoke test ", () => {});
+test.skip("manager smoke test ", () => {});
