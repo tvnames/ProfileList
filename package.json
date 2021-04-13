@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest",
+    "test:watch": "jest --watch"
   },
   "repository": {
     "type": "git",
@@ -16,5 +17,11 @@
   "bugs": {
     "url": "https://github.com/tvnames/profileGenerator/issues"
   },
-  "homepage": "https://github.com/tvnames/profileGenerator#readme"
+  "homepage": "https://github.com/tvnames/profileGenerator#readme",
+  "devDependencies": {
+    "jest": "^26.6.3"
+  },
+  "dependencies": {
+    "inquirer": "^8.0.0"
+  }
 }
