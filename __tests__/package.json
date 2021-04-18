@@ -1,5 +1,5 @@
 {
-  "name": "profileGenerator",
+  "name": "ProfileList",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -9,15 +9,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/tvnames/profileGenerator.git"
+    "url": "git+https://github.com/tvnames/ProfileList.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/tvnames/profileGenerator/issues"
+    "url": "https://github.com/tvnames/ProfileList/issues"
   },
-  "homepage": "https://github.com/tvnames/profileGenerator#readme",
+  "homepage": "https://github.com/tvnames/ProfileList#readme",
   "devDependencies": {
     "jest": "^26.6.3"
   },
