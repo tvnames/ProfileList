@@ -1,42 +1,207 @@
-function employee(name, id, email, role) {
-    this.name = name;
-    this.id = id;
-    this.email =  email;
-    this.role = role;
-    this.getName = () => {
-        if(this.name === true) {
-            console.log(this.name);
+var employeeCards = ``;
+const inquirer = require("inquirer");
+const fs = require("fs");
+const Engineer = require("./lib/engineer");
+const Manager = require("./lib/manager");
+const Intern = require("./lib/intern");
+
+class CreateTeam {
+  addManager() {
+    inquirer
+      .prompt([
+        {
+          type: "input",
+          message: "What is the team manager's name?",
+          name: "name",
+        },
+        {
+          type: "number",
+          message: "What is their employee ID?",
+          name: "id",
+        },
+        {
+          type: "input",
+          message: "What is their email address?",
+          name: "email",
+        },
+        {
+          type: "number",
+          message: "What is their office number?",
+          name: "officeNumber",
+        },
+      ])
+      .then((ans) => {
+        const manager = new Manager(
+          ans.name,
+          ans.id,
+          ans.email,
+          ans.officeNumber
+        );
+        employeeCards += `<div class="col mb-4">
+				<div class="card bg-light shadow bg-white rounded">
+					<div class="card-body bg-secondary text-white">
+						<h4 class="card-title">${manager.name}</h4>
+						<h4 class="card-title">${new Manager().getRole()}</h4>
+					</div>
+					<ul class="list-group list-group-flush mx-3 my-4 border">
+						<li class="list-group-item">ID: ${manager.id}</li>
+						<li class="list-group-item">Email: <a href="mailto:${manager.email}">${
+          manager.email
+        }</a></li>
+						<li class="list-group-item">Office Number: ${manager.officeNumber}</li>
+					</ul>
+				</div>
+				</div>`;
+        this.addMore();
+      });
+  }
+  addMore() {
+    inquirer
+      .prompt([
+        {
+          type: "list",
+          message: "Add Engineer, Intern or create team?",
+          name: "continue",
+          choices: ["Engineer", "Intern", "Done"],
+        },
+      ])
+      .then((answers) => {
+        if (answers.continue === "Engineer") {
+          inquirer
+            .prompt([
+              {
+                type: "input",
+                message: "What is the Engineer's name?",
+                name: "name",
+              },
+              {
+                type: "number",
+                message: "What is their employee ID?",
+                name: "id",
+              },
+              {
+                type: "input",
+                message: "What is their email address?",
+                name: "email",
+              },
+              {
+                type: "input",
+                message: "What is their GitHub username?",
+                name: "github",
+              },
+            ])
+            .then((ans) => {
+              const engineer = new Engineer(
+                ans.name,
+                ans.id,
+                ans.email,
+                ans.github
+              );
+              employeeCards += `<div class="col mb-4">
+						<div class="card bg-light shadow bg-white rounded">
+							<div class="card-body bg-secondary text-white">
+								<h4 class="card-title">${engineer.name}</h4>
+								<h4 class="card-title">${new Engineer().getRole()}</h4>
+							</div>
+							<ul class="list-group list-group-flush mx-3 my-4 border">
+								<li class="list-group-item">ID: ${engineer.id}</li>
+								<li class="list-group-item">Email: <a href="mailto:${engineer.email}">${
+                engineer.email
+              }</a></li>
+								<li class="list-group-item">GitHub: <a href="https://github.com/${
+                  engineer.github
+                }">${engineer.github}</a></li>
+							</ul>
+						</div>
+						</div>`;
+              this.addMore();
+            });
+        } else if (answers.continue === "Intern") {
+          inquirer
+            .prompt([
+              {
+                type: "input",
+                message: "What is the Intern's name?",
+                name: "name",
+              },
+              {
+                type: "number",
+                message: "What is their employee ID?",
+                name: "id",
+              },
+              {
+                type: "input",
+                message: "What is their email address?",
+                name: "email",
+              },
+              {
+                type: "input",
+                message: "What school do they attend?",
+                name: "school",
+              },
+            ])
+            .then((ans) => {
+              const intern = new Intern(
+                ans.name,
+                ans.id,
+                ans.email,
+                ans.school
+              );
+              employeeCards += `<div class="col mb-4">
+					<div class="card bg-light shadow bg-white rounded">
+						<div class="card-body bg-secondary text-white">
+							<h4 class="card-title">${intern.name}</h4>
+							<h4 class="card-title">${new Intern().getRole()}</h4>
+						</div>
+						<ul class="list-group list-group-flush mx-3 my-4 border">
+							<li class="list-group-item">ID: ${intern.id}</li>
+							<li class="list-group-item">Email: <a href="mailto:${intern.email}">${
+                intern.email
+              }</a></li>
+							<li class="list-group-item">School: ${intern.school}</li>
+						</ul>
+					</div>
+					</div>`;
+              this.addMore();
+            });
+        } else {
+          const content = `<!DOCTYPE html>
+					<html lang="en">
+						<head>
+							<meta charset="UTF-8" />
+							<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+							<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+							<link
+								rel="stylesheet"
+								href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
+								integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l"
+								crossorigin="anonymous"
+							/>
+							<title>My Team</title>
+						</head>
+						<body>
+							<header>
+								<nav class="navbar navbar-expand-lg navbar-dark bg-primary p-4">
+									<h1 class="col-12 text-center text-white">My Team</h1>
+								</nav>
+							</header>
+							<main class="p-5 d-flex justify-content-center col-12">
+								<section class="col-9 row row-cols-1 row-cols-md-3 d-flex justify-content-center">
+								${employeeCards}
+								</section>
+							</main>
+						</body>
+					</html>`;
+          fs.writeFile("src/team.html", content, (err) => {
+            if (err) {
+              console.error(err);
+              return;
+            }
+            console.log("Done");
+            process.exit();
+          });
         }
-    };
-    this.getId = () => {
-        if(this.id === true) {
-            console.log(this.id);
-        }
-    };
-    this.getEmail = () => {
-        if(this.email === true) {
-            console.log(this.email);
-        }
-    };
-    this.getRole = () => {
-        if(this.role === true) {
-            console.log(employee);
-        }
-    };
+      });
+  }
 }
-
-    const manager = new employee(true, 'Jared', '155', 'jared@email.com', 'Manager', '101');
-    const engineer = new employee(true, 'Bob', '177', 'bob@email.com', 'Engineer');
-    const intern = new employee(true, 'James', '822', 'james@email.com', 'Intern');
-
-    manager.getName();
-    engineer.getName();
-    intern.getName();
-
-    employee.prototype.printInfo = function () {
-     console.log(`
-    Name: ${this.name}\nId: ${this.id}\nEmail: ${this.email}\n Role: ${this.role} `);
-    console.log(`n-------------\n`);
-
- };
-
+new CreateTeam().addManager();
